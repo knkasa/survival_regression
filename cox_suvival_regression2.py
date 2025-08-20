@@ -76,3 +76,21 @@ exp(coef) = 2.0 means sales is extimated to be twice as high in post study sessi
 ctv = CoxTimeVaryingFitter()
 ctv.fit(tv_df, id_col="person_id", start_col="start", stop_col="stop", event_col="event")
 ctv.print_summary()
+
+#==========================================================================================
+# dataset looks like this.
+   id  start  stop  treatmentA  treatmentB  age  event
+0   1      0     2           0           0   55      0
+1   1      2     5           1           0   55      0
+2   1      5     7           1           1   55      1
+3   2      0     6           0           0   60      0
+4   3      0     4           0           1   40      1
+
+from lifelines import CoxTimeVaryingFitter
+ctv = CoxTimeVaryingFitter()
+ctv.fit(tv_data, id_col="id", start_col="start", stop_col="stop", event_col="event")
+ctv.print_summary()
+
+#You’ll get one coefficient for each treatment:
+#coef(treatmentA) → log hazard ratio for being on A vs. not, adjusting for B.
+#coef(treatmentB) → log hazard ratio for being on B vs. not, adjusting for A.
